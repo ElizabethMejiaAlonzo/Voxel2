@@ -1,0 +1,75 @@
+<span *ngIf="files.length > 0">
+
+    <table class="table table-headed table-striped">
+        <thead>
+            <tr>
+                <th class="text-left">Name</th>
+                <th class="text-right">Size</th>
+                <th class="text-left">Progress</th>
+                <th class="text-left">Status</th>
+                <th class="text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of files; let i=index ">
+                <td>{{ item?.file?.name }}</td>
+                <td class="text-right">{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                <td>
+                    <div *ngIf="item.percent$ | async as pct" class="align-progress">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" [style.width]="pct + '%'">
+                                {{ pct | number:'.2'}}%
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="item.snapshot$ | async as snap">
+                        <span class="badge badge-pill" [ngClass]="{
+                                'badge-success':  snap?.state === 'success',
+                                'badge-info':     snap?.state === 'running',
+                                'badge-warning':  snap?.state === 'paused',
+                                'badge-danger':   item.cancel === true
+                            }">
+                            <span *ngIf="item.cancel">
+                                canceled
+                            </span>
+                            <span *ngIf="!item.cancel">
+                                {{snap?.state}}
+                            </span>
+                        </span>
+                    </div>
+                    <div *ngIf="!item.snapshot$">
+                        <span class="badge badge-pill badge-secondary">local</span>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div *ngIf="item.snapshot$ | async as snap">
+                        <span *ngIf="isActive(snap) || (snap?.state === 'paused')">
+                            <span *ngIf="!item.cancel">
+                                <button class="btn btn-warning" [disabled]="!isActive(snap)"
+                                    (click)="item.task.pause()"><i class="fa fa-pause-circle-o"></i> Pause</button>
+                                <button class="btn btn-danger" [disabled]="!isActive(snap)"
+                                    (click)="item.task.cancel()"><i class="fa fa-times-circle-o"></i> Cancel</button>
+                                <button class="btn btn-primary" [disabled]="!(snap?.state === 'paused')"
+                                    (click)="item.task.resume()"><i class="fa fa-play-circle-o"></i> Resume</button>
+                            </span>
+                        </span>
+                        <span *ngIf="!isActive(snap) && !(snap?.state === 'paused')">
+                            <div *ngIf="item.downloadURL as url">
+                                <a class="btn btn-primary" [href]="url" target="_blank" rel="noopener"><i
+                                        class="fa fa-download"></i> Download</a>
+                            </div>
+                        </span>
+                    </div>
+                    <div *ngIf="!item.snapshot$">
+                        <button class="btn btn-info" (click)="uploadFile(item)"><i class="fa fa-upload"></i>
+                            Upload</button>
+                        <button class="btn btn-danger" (click)="trashFile(i)"><i class="fa fa-trash"></i>
+                            Delete</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</span>

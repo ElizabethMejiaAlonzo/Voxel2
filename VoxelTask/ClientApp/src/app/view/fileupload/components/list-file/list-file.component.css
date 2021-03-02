@@ -1,0 +1,35 @@
+.fileItem {
+    width        : calc(25% - 6px);
+    overflow     : hidden;
+    height       : fit-content;
+    margin       : 3px;
+    padding      : 10px;
+    display      : block;
+    position     : relative;
+    float        : left;
+    border       : 2px dashed #778899;
+    border-radius: 5px;
+    transition   : .3s ease;
+}
+
+.fileItem:hover {
+    border          : 2px solid #c33838;
+    background-color: #c33838bf;
+}
+
+.fileItem:hover .fileItemIcon::before {
+    content: "\f00d";
+    color  : whitesmoke;
+}
+
+.fileItem:hover .fileItemText {
+    color: whitesmoke;
+}
+
+.fileItemIconDiv {
+    text-align: center;
+}
+
+.align-progress {
+    margin-top: 5px;
+}

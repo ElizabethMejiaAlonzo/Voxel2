@@ -1,0 +1,29 @@
+.container {
+    margin-top: 30px;
+}
+
+.map-frame {
+    margin-top: 30px;
+    border: 2px solid black;
+    height: 100%;
+}
+
+
+.map {
+    height: 40vw;
+}
+
+.text-center
+{
+    text-align: center;
+}
+
+.weight-bold
+{
+    font-weight: bold;
+}
+
+.font-medium
+{
+    font-size: medium;
+}

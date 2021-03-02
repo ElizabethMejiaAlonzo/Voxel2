@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fileupload-cbf29": {
+      "hosting": {
+        "exam1": [
+          "fileupload-cbf29"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fileupload-3e4fd"
+  }
+}
