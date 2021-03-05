@@ -25,7 +25,7 @@ export class MapComponent {
   private initMap() {
     this.map = L.map('map').setView([19.432608, -99.133209], 5);
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
-      maxZoom: 5,
+      maxZoom: 18,
       minZoom: 1,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
